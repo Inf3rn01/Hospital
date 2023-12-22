@@ -1,0 +1,105 @@
+CREATE TABLE Post(
+  id INTEGER PRIMARY key AUTOINCREMENT,
+  title VARCHAR(55) NOT NULL
+);
+
+CREATE TABLE Department(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title VARCHAR(55) NOT NULL
+);
+
+CREATE TABLE Staff(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  FIO VARCHAR(55) NOT NULL,
+  id_post INT NOT NULL,
+  id_department INT NOT NULL,
+  FOREIGN Key (id_post) REFERENCES Post(id)
+   on DELETE SET NULL ON UPDATE no ACTION,
+  FOREIGN Key (id_department) REFERENCES Department(id)
+   on DELETE SET NULL ON UPDATE no ACTION
+);
+
+CREATE TABLE Role(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title VARCHAR(55) NOT NULL
+);
+
+CREATE TABLE Users(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  FIO VARCHAR(55) NOT NULL,
+  login VARCHAR(55) NOT NULL,
+  password VARCHAR(55) NOT NULL,
+  id_role INT NOT NULL,
+  FOREIGN KEY (id_role) REFERENCES Role(id)
+   on DELETE SET NULL ON UPDATE no ACTION
+ );
+ 
+ 
+ CREATE TABLE Type_of_treatment(
+   id INTEGER PRIMARY key AUTOINCREMENT,
+   title VARCHAR(55)
+ );
+ 
+ 
+ CREATE TABLE Status_request(
+   id INTEGER PRIMARY KEY AUTOINCREMENT,
+   title VARCHAR(55) NOT NULL
+ );
+ 
+ CREATE TABLE Request(
+   id INTEGER PRIMARY KEY AUTOINCREMENT,
+   add_data TEXT NOT NULL,
+   id_status_req INT NOT NULL,
+   id_user INT NOT NULL,
+   FOREIGN KEY (id_status_req) REFERENCES Status_request(id)
+    on DELETE SET NULL ON UPDATE no ACTION,
+   FOREIGN KEY (id_user) REFERENCES Users(id)
+    on DELETE SET NULL ON UPDATE no ACTION
+ );
+ 
+  CREATE TABLE Type_of_disease(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title VARCHAR(55) NOT NULL
+ );
+ 
+ CREATE TABLE Disease(
+   id INTEGER PRIMARY KEY AUTOINCREMENT,
+   title VARCHAR(55) NOT NULL,
+   description VARCHAR,
+   id_type_of_disease INT NOT NULL,
+   FOREIGN KEY (id_type_of_disease) REFERENCES Type_of_disease(id)
+    on DELETE SET NULL ON UPDATE no ACTION
+ );
+ 
+ CREATE TABLE Reception(
+   id INTEGER PRIMARY KEY AUTOINCREMENT,
+   id_req INT NOT NULL,
+   id_staff INT NOT NULL,
+   id_disease INT NOT NULL,
+   id_type_of_treatment INT NOT NULL,
+   description_of_treatment VARCHAR NOT NULL,
+   FOREIGN KEY (id_req) REFERENCES Request(id)
+  	on DELETE SET NULL ON UPDATE no ACTION,
+   FOREIGN KEY (id_staff) REFERENCES Staff(id)
+  	on DELETE SET NULL ON UPDATE no ACTION,
+   FOREIGN KEY (id_type_of_treatment) REFERENCES Type_of_treatment(id)
+  	on DELETE SET NULL ON UPDATE no ACTION,
+   FOREIGN KEY (id_disease) REFERENCES Disease(id)
+  	on DELETE SET NULL ON UPDATE no ACTION
+ );
+ 
+ CREATE TABLE Treatment_status(
+   id INTEGER PRIMARY KEY AUTOINCREMENT,
+   title VARCHAR (55) NOT NULL
+ );
+ 
+ CREATE TABLE Patients(
+   id INTEGER PRIMARY KEY AUTOINCREMENT,
+   id_reception INT NOT NULL,
+   id_status INT NOT NULL,
+   data_of_discharge TEXT,
+   FOREIGN KEY (id_reception) REFERENCES Reception(id)
+  	on DELETE SET NULL ON UPDATE no ACTION,
+   FOREIGN KEY (id_status) REFERENCES Treatment_status(id)
+  	on DELETE SET NULL ON UPDATE no ACTION
+ );
