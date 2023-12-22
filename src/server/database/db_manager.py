@@ -17,7 +17,7 @@ class DBManager:
 
         return conn, cur
 
-    def execute_sql_script(self, create_script: str, fill_script):
+    def execute_sql_script(self, create_script: str, fill_script: str):
         conn, cur = self.connect_db()
         try:
             cur.executescript(open(create_script).read())
