@@ -28,6 +28,7 @@ class Users(ModifyBaseModel):
     FIO: str
     login: str
     password: str
+    id_role: int
 
 
 class Type_of_treatments(ModifyBaseModel):

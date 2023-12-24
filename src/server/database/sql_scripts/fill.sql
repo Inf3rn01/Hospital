@@ -22,6 +22,8 @@ INSERT INTO Role(title) VALUES ("User");
 
 INSERT INTO Users(FIO,login,password,id_role) VALUES ("Пугачев Данил Игоревич","admin","admin",1);
 INSERT INTO Users(FIO,login,password,id_role) VALUES ("Абдуржмаев Энакентий Эдуардович","enakei","123",2);
+INSERT INTO Users(FIO,login,password,id_role) VALUES ("Test","test","test",2);
+
 
 INSERT INTO Request(add_data,id_status_req,id_user) VALUES ("11/12/23 19:23",1,2);
 

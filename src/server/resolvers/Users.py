@@ -35,8 +35,8 @@ def get_all() -> List[Users] | dict:
     return res
 
 
-def create(new_user: Users) -> int | dict:
-    res = db_manager.execute_query(query='INSERT INTO Users(FIO,login,password) VALUES (?,?,?) returning id',
+def add_user(new_user: Users) -> int | dict:
+    res = db_manager.execute_query(query='INSERT INTO Users(FIO,login,password, id_role) VALUES (?,?,?,?) returning id',
                                    args=(new_user.FIO, new_user.login, new_user.password))
     if type != dict:
         res = get(res[0])
@@ -45,7 +45,7 @@ def create(new_user: Users) -> int | dict:
 
 
 def update(user_id: int, new_data: Users) -> None:
-    return db_manager.execute_query(query='UPDATE Users SET (FIO, login, password) = (?,?,?) WHERE id = (?)',
+    return db_manager.execute_query(query='UPDATE Users SET (FIO, login, password, id_role) = (?,?,?,?) WHERE id = (?)',
                                     arqs=(new_data.FIO, new_data.login, new_data.password, user_id))
 
 

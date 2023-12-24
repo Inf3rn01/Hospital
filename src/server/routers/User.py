@@ -11,14 +11,14 @@ def get_all() -> List[Users] | dict:
     return get_all()
 
 
-@router.get('/user/{user_id}')
+@router.get('/{user_id}')
 def get(user_id: int) -> Users:
     return Users.get(user_id)
 
 
-@router.post('/create/')
-def create(new_user: Users) -> Users | dict:
-    return Users.create(new_user)
+@router.post('/add_user/')
+def add_user(new_user: Users) -> Users | dict:
+    return Users.add_user(new_user)
 
 
 @router.put('/update/{user_id}')
