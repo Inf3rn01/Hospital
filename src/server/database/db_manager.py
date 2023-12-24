@@ -1,9 +1,5 @@
 import sqlite3
 import os
-import sys
-
-sys.path.append('../src/settings')
-
 import settings
 
 
@@ -24,7 +20,6 @@ class DBManager:
     def execute_sql_script(self, create_script: str, fill_script: str):
         conn, cur = self.connect_db()
         try:
-
             cur.executescript(open(create_script).read())
             cur.executescript(open(fill_script, encoding="utf-8").read())
             conn.commit()
@@ -40,13 +35,14 @@ class DBManager:
                 res = cur.execute(query, args).fetchone()
             else:
                 res = cur.execute(query).fetchall()
-        except sqlite3.IntegrityError:
-            return {'error': 'request contains unique error'}
-        finally:
-            conn.commit()
-            conn.close()
 
-        return res
+            conn.commit()
+            return {'code': 200, 'data': res}
+
+        except sqlite3.IntegrityError:
+            return {'code': 500, 'error': 'request contains unique error'}
+        finally:
+            conn.close()
 
 
 db_manager = DBManager(db_path=settings.DB_PATH)
