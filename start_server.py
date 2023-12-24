@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-#from server import routers
+from server.router_list import router_list
 import uvicorn
 from settings import CREATE_PATH, FILL_PATH, PORT, HOST
 from fastapi.responses import RedirectResponse
@@ -7,7 +7,8 @@ from server.database.db_manager import db_manager
 
 app = FastAPI(title="Hospital")
 
-#[app.include_router(router) for router in routers]
+[app.include_router(router) for router in router_list]
+
 
 @app.get('/')
 def root():
