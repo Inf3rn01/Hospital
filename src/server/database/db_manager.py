@@ -1,6 +1,10 @@
 import sqlite3
 import os
-from server.settings import DB_PATH
+import sys
+
+sys.path.append('../src/settings')
+
+import settings
 
 
 class DBManager:
@@ -11,7 +15,7 @@ class DBManager:
     def check_base(self):
         return os.path.exists(self.db_path)
 
-    def connect_db(self) -> tuple[sqlite3.Connection, sqlite3.Cursor]:
+    def connect_db(self):
         conn = sqlite3.connect(self.db_path)
         cur = conn.cursor()
 
@@ -20,8 +24,9 @@ class DBManager:
     def execute_sql_script(self, create_script: str, fill_script: str):
         conn, cur = self.connect_db()
         try:
+
             cur.executescript(open(create_script).read())
-            cur.executescript(open(fill_script).read())
+            cur.executescript(open(fill_script, encoding="utf-8").read())
             conn.commit()
             conn.close()
         except sqlite3.Error as error:
@@ -44,4 +49,4 @@ class DBManager:
         return res
 
 
-db_manager = DBManager(db_path=DB_PATH)
+db_manager = DBManager(db_path=settings.DB_PATH)
