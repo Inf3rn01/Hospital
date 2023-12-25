@@ -28,7 +28,7 @@ class Users(ModifyBaseModel):
     FIO: str
     login: str
     password: str
-    id_role: int
+    id_role: int = 2
 
 
 class Type_of_treatments(ModifyBaseModel):
